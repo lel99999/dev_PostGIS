@@ -46,7 +46,7 @@ require 'yaml'
 #    config.vm.provision "ansible" do |ansible|
 ##     ansible.playbook = "deploy_ancillaryRH7.yml"
 ##     ansible.playbook = "deploy_eodrole.yml"
-#      ansible.playbook = "deploy_jenkinsRH7.yml"
+#      ansible.playbook = "deploy_postgisRH7.yml"
 ##     ansible.groups = {
 ##       "vagrantAWS" => ["vagrantAWS-Data"]
 ##     }
@@ -69,20 +69,20 @@ Vagrant.configure("2") do |config|
 #   trigger.info = "Trigger Execution ..."
 #   trigger.run = { path:"subscription-manager register --username <username> --password <password> --auto-attach"}
 # end
-  config.vm.define "jenkinsRH7" do |chromeRH7|
-    jenkinsRH7.vm.box = "clouddood/RH7.5_baserepo"
-    jenkinsRH7.vm.hostname = "emacsRH7"
-    jenkinsRH7.vm.network "private_network", ip: "192.168.60.167"
-#   jenkinsRH7.vm.network "private_network", ip: "192.168.60.167", nic_type: "virtio"
-    jenkinsRH7.vm.provision "shell", :inline => "sudo echo '192.168.60.167 jenkinsRH7.local jenkinsRH7' >> /etc/hosts"
+  config.vm.define "postgisRH7" do |postgisRH7|
+    postgisRH7.vm.box = "clouddood/RH7.5_baserepo"
+    postgisRH7.vm.hostname = "emacsRH7"
+    postgisRH7.vm.network "private_network", ip: "192.168.60.167"
+#   postgisRH7.vm.network "private_network", ip: "192.168.60.167", nic_type: "virtio"
+    postgisRH7.vm.provision "shell", :inline => "sudo echo '192.168.60.167 postgisRH7.local postgisRH7' >> /etc/hosts"
 
 ##  Use Main / Update in Vagrant provision command ### $vagrant provision --provision-with shell/main/update
 
     # Default
-    jenkinsRH7.vm.provision "main", type: "ansible" do |ansible|
-      ansible.playbook = "deploy_jenkinsRH7_DEV.local.yml"
-#     ansible.playbook = "deploy_jenkinsRH7_DEV.local.yml"
-#     ansible.playbook = "deploy_jenkinsTestRH7.yml"
+    postgisRH7.vm.provision "main", type: "ansible" do |ansible|
+      ansible.playbook = "deploy_postgisRH7_DEV.local.yml"
+#     ansible.playbook = "deploy_postgisRH7_DEV.local.yml"
+#     ansible.playbook = "deploy_postgisTestRH7.yml"
       ansible.inventory_path = "vagrant_hosts"
       #ansible.tags = ansible_tags
       #ansible.verbose = ansible_verbosity
@@ -90,9 +90,9 @@ Vagrant.configure("2") do |config|
       #ansible.limit = ansible_limit
     end
     # Update
-#   jenkinsRH7.vm.provision "update", type: "ansible" do |ansible|
-#     ansible.playbook = "deploy_jenkinsPatchRH7_DEV.local.yml"
-#     ansible.playbook = "deploy_jenkinsTestRH7.yml"
+#   postgisRH7.vm.provision "update", type: "ansible" do |ansible|
+#     ansible.playbook = "deploy_postgisPatchRH7_DEV.local.yml"
+#     ansible.playbook = "deploy_postgisTestRH7.yml"
 #     ansible.inventory_path = "vagrant_hosts"
 #     #ansible.tags = ansible_tags
 #     #ansible.verbose = ansible_verbosity
